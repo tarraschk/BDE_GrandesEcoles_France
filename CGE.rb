@@ -22,23 +22,23 @@ browser = Watir::Browser.new
     next
   else
     nom_ecole_object = browser.div(:id => "fiche-ecole").div(:class => "right-column").h2
-    if nom_ecole_object.exists?
+    url_object = browser.div(:id => "fiche-ecole").div(:class => "right-column").h3
+    if nom_ecole_object.exists? && url_object.exists?
       nom_ecole = nom_ecole_object.text
-    else
-      url_object = browser.div(:id => "fiche-ecole").div(:class => "right-column").h3
-      if url_object.exists?
-        url = url_object.text
-        if url.empty?
-          next
-        end
-        #Ici, manipulez les données
-        email = String.new(url)
-        email = email.split("/")[0]
-        email_tab = email.split(".")
-        email_tab.shift
-        email = "bde@"+email_tab.join(".")
-        puts nom_ecole+";;"+url+";;"+email
+      url = url_object.text
+      
+      if url.empty?
+        next
       end
+      
+      #Ici, manipulez les données
+      email = String.new(url)
+      email = email.split("/")[0]
+      email_tab = email.split(".")
+      email_tab.shift
+      email = "bde@"+email_tab.join(".")
+      puts nom_ecole+";;"+url+";;"+email
+      
     end
   end
 end
